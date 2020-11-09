@@ -1,0 +1,9 @@
+hostname Doz
+
+
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 192.168.1.1, timeout is 2 seconds:
+Packet sent with a source address of 192.168.1.3 
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/5/9 ms
+
