@@ -1,5 +1,5 @@
 # Py-tvt
-Python TVT Tests Script
+Python Config Command Sender for One host and individual commands, this is a tweak to the original TVT for when each host requires its own commands. This has been done to speed things up.
 
 
 ## Installation
@@ -10,7 +10,7 @@ netmiko
 re
 difflib
 
-Use the package manager pip to install 
+Use the package manager pip to install
 ```bash
 pip install getpass
 pip install netmiko
@@ -22,22 +22,20 @@ pip install re
 
 ```python
 Edit the IPs.txt file to have a host on each line with just their IP
-Edit the commands.txt file with your CLI command on each line
+Edit the change_commands.txt file with your CLI command on each line
 
-To execute: python3 TVT.py
+We are using input arguments to save time, Arg 1 is USERNAME arg 2 is Before or After
+
+To execute a Before: python3 Changes.py USERNAME Before
+To execute an After: python3 Changes.py USERNAME After
 
 You will be shown the list of commands this script is going to execute, if there is an issue, exit the script.
 
-You will be prompted for your username and password
+You will then be prompted for your password
 
-For Pre-TVT tests, enter Before.txt at the prompt, as this is where it will store the Pre-TVT test Result
-For Post-TVT test, enter  After.txt at the promtp, as this is where it will store the Post-TVT test Result
+The script will run through the host and its commands.
 
-The script will run through each host and run each of the commands on each host, saving this to the above text file.
-
-If you are doing Post-TVT using After.txt, it will create changes.html which will include a Diff, showing before and after.
-
-```
+Upon completion it will write the config to start-up and print the status.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
