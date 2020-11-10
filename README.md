@@ -1,5 +1,5 @@
 # Py-tvt
-Python Config Command Sender for One host and individual commands, this is a tweak to the original TVT for when each host requires its own commands. This has been done to speed things up.
+Python Config Command Sender with unique commands for each host.
 
 
 ## Installation
@@ -22,7 +22,9 @@ pip install re
 
 ```python
 Edit the IPs.txt file to have a host on each line with just their IP
-Edit the change_commands.txt file with your CLI command on each line
+Create a commands for each host, it must be in the format of the ip_address.txt.
+
+EG: IP.txt contains 192.168.1.3, commands file needs to be called 192.168.1.3.txt
 
 We are using input arguments to save time, Arg 1 is USERNAME arg 2 is Before or After
 

@@ -15,14 +15,6 @@ def get_ips (file_name):
 		line = get_ip(line)
 		for ip in line:
 			ips.append(ip)
-# This will be the list of commands we will use
-commands_list = []
-
-# Get the commands from commands.txt and append to our list
-with open('commands.txt', 'r') as f:
-	for line in f:
-		commands_list.append(line)
-
 
 def to_doc_a(file_name, varable):
 	f=open(file_name, 'a')
@@ -44,8 +36,7 @@ ips = []
 get_ips("IPs.txt")
 print('#' * 50)
 print('#' * 50, '\n HOSTS', ips, '\n', "COMMAND LIST", '\n')
-for commands in commands_list:
-	print(commands)
+
 print("IF INCORRECT QUIT NOW CTRL^C ", '\n', '#' * 50)
 print('#' * 50)
 
@@ -64,6 +55,12 @@ for ip in ips:
 	#Connect to a device
 	net_connect = make_connection(ip, username, password)
 	#Run all our commands and append to our file_name
+	commands_list = []
+	# Get the commands from commands.txt and append to our list
+	with open(ip + '.txt', 'r') as f:
+		for line in f:
+			commands_list.append(line)
+
 	for commands in commands_list:
 		output = net_connect.send_command_expect(commands)
 		results = output + '\n'
