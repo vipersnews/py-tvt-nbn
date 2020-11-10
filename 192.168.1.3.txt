@@ -1,2 +1,2 @@
 show run | inc hostname
-show log
+show clock

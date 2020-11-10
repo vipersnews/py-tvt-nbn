@@ -53,17 +53,14 @@ to_doc_w(file_name, "")
 #Make a for loop to hit all the devices, for this we will be looking at the IOS it's running
 for ip in ips:
 	#Connect to a device
-	file_name_tup = (ip, "-" + sys.argv[2] + ".txt" )
-	file_name = ''.join(file_name_tup)
-	to_doc_w(file_name, "")
+	net_connect = make_connection(ip, username, password)
+	#Run all our commands and append to our file_name
 	commands_list = []
-		# Get the commands from commands.txt and append to our list
+	# Get the commands from commands.txt and append to our list
 	with open(ip + '.txt', 'r') as f:
 		for line in f:
 			commands_list.append(line)
 
-	net_connect = make_connection("192.168.1.3", username, password)
-	#Run all our commands and append to our file_name
 	for commands in commands_list:
 		output = net_connect.send_command_expect(commands)
 		results = output + '\n'
@@ -71,21 +68,17 @@ for ip in ips:
 		to_doc_a(file_name, results)
 
 #Loop to determine actions for Pre-TVT or Post-TVT
-if "Before" in file_name:
+if file_name == "Before.txt":
 	print('Completed')
-elif "After" in file_name:
-	for ip in ips:
-		file_name_before = (ip, "-" + "Before.txt" )
-		file_name_after = (ip, "-" + "After.txt" )
-#		file_name = ''.join(file_name_tup)
-		fromfile = ''.join(file_name_before)
-		tofile = ''.join(file_name_after)
-		fromlines = open(fromfile, 'U').readlines()
-		tolines = open(tofile, 'U').readlines()
-		diff = difflib.HtmlDiff().make_file(fromlines,tolines,fromfile,tofile)
-		f = open(ip + "-changes.html", "w")
-		f.write(diff)
-		f.close
-		print("Open " + ip + "-changes.html to see difference")
+elif file_name == "After.txt":
+	fromfile = "Before.txt"
+	tofile = "After.txt"
+	fromlines = open(fromfile, 'U').readlines()
+	tolines = open(tofile, 'U').readlines()
+	diff = difflib.HtmlDiff().make_file(fromlines,tolines,fromfile,tofile)
+	f = open("changes.html", "w")
+	f.write(diff)
+	f.close
+	print("Open changes.html to see difference")
 else:
 	print('Before or After not detected')
