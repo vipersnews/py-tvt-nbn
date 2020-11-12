@@ -22,10 +22,11 @@ pip install re
 
 ```python
 USER CONFIGURATIONS:
+Under folder input:
 Edit the IPs.txt file to have a host on each line with just their IP
 Create a commands for each host, it must be in the format of the ipaddress.txt.
 
-EG: IP.txt contains hosts 192.168.1.3, 192.168.1.4, 192.168.1.5. 3 commands files need to be created called 192.168.1.3.txt, 192.168.1.4.txt and 192.168.1.5.txt 
+EG: IP.txt contains hosts 192.168.1.3, 192.168.1.4, 192.168.1.5. 3 commands files need to be created called 192.168.1.3.txt, 192.168.1.4.txt and 192.168.1.5.txt
 
 RUNNING SCRIPT:
 
@@ -36,7 +37,7 @@ Enter Password
 Enter Before.txt
 
 
-To execute an After check post your router changes: python3 TVT.py 
+To execute an After check post your router changes: python3 TVT.py
 At the prompts:-
 Enter Username
 Enter Password
@@ -48,6 +49,7 @@ The script will run through the host and its commands.
 
 If there is an error connecting to an individual host, it will print and error and continue on.
 
+Under Folder output:
 Upon completion of the Before script option, it will write Completed.
 
 Upon completion of the After script option, it will run a diff and generate you a HTML file to compare the Before & After of each host
