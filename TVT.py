@@ -34,7 +34,7 @@ ips = []
 #This function pulls those IPs out of the txt file and puts them into a list
 get_ips("IPs.txt")
 print('#' * 50)
-print('#' * 50, '\n HOSTS', ips, '\n', " INDIVIDUAL COMMAND LIST", '\n')
+print('#' * 50, '\n HOSTS', ips, '\n', " Make sure you have checked your individual command files", '\n')
 
 print("IF INCORRECT QUIT NOW CTRL^C ", '\n', '#' * 50)
 print('#' * 50)
@@ -58,7 +58,9 @@ for ip in ips:
 			commands_list.append(line)
 
 	try:
+
 		net_connect = make_connection(ip , username, password)
+		print("Completing " + ip )
 		#Run all our commands and append to our file_name
 		for commands in commands_list:
 			output = net_connect.send_command_expect(commands)
