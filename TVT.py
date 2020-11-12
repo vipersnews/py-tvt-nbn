@@ -2,7 +2,6 @@ from getpass import getpass
 import netmiko
 import re
 import difflib
-import sys
 
 def make_connection (ip, username, password):
 		return netmiko.ConnectHandler(device_type='cisco_ios', ip=ip, username=username, password=password)
@@ -35,49 +34,53 @@ ips = []
 #This function pulls those IPs out of the txt file and puts them into a list
 get_ips("IPs.txt")
 print('#' * 50)
-print('#' * 50, '\n HOSTS', ips, '\n', "COMMAND LIST", '\n')
+print('#' * 50, '\n HOSTS', ips, '\n', " INDIVIDUAL COMMAND LIST", '\n')
 
 print("IF INCORRECT QUIT NOW CTRL^C ", '\n', '#' * 50)
 print('#' * 50)
 
 #Prompt user for account info
-username = sys.argv[1]
+username = input("Username: ")
 password = getpass()
 #This is required for our Diff Loop, pre-tvt store in Before, Post in After
-file_name = (sys.argv[2] + ".txt" )
+file_name_input = input("For Pre-TVT type Before.txt - For Post-TVT type After.txt : ")
 #Clearing all the old info out of the results.csv file
-to_doc_w(file_name, "")
+#to_doc_w(file_name, "")
 #Commands To Use
 
 
-#Make a for loop to hit all the devices, for this we will be looking at the IOS it's running
+#For each IP in our IPs.txt file, we will look for that IP.txt for the individual commands for the host
 for ip in ips:
 	#Connect to a device
-	file_name_tup = (ip, "-" + sys.argv[2] + ".txt" )
+	file_name_tup = (ip, "-" + file_name_input )
 	file_name = ''.join(file_name_tup)
 	to_doc_w(file_name, "")
 	commands_list = []
-		# Get the commands from commands.txt and append to our list
+		# Get the commands from unique ipaddress.txt and append to our list
 	with open(ip + '.txt', 'r') as f:
 		for line in f:
 			commands_list.append(line)
 
-	net_connect = make_connection("192.168.1.3", username, password)
-	#Run all our commands and append to our file_name
-	for commands in commands_list:
-		output = net_connect.send_command_expect(commands)
-		results = output + '\n'
-        #Next we will append the output to the results file
-		to_doc_a(file_name, results)
+	try:
+		net_connect = make_connection(ip , username, password)
+		#Run all our commands and append to our file_name
+		for commands in commands_list:
+			output = net_connect.send_command_expect(commands)
+			results = output + '\n'
+        	#Next we will append the output to the individual results file
+			to_doc_a(file_name, results)
+	except:
+		print( ip + " Failed to connect")
 
 #Loop to determine actions for Pre-TVT or Post-TVT
+#Before Just prints complete
 if "Before" in file_name:
 	print('Completed')
+#After will run the diff comparing before and after
 elif "After" in file_name:
 	for ip in ips:
 		file_name_before = (ip, "-" + "Before.txt" )
 		file_name_after = (ip, "-" + "After.txt" )
-#		file_name = ''.join(file_name_tup)
 		fromfile = ''.join(file_name_before)
 		tofile = ''.join(file_name_after)
 		fromlines = open(fromfile, 'U').readlines()
@@ -87,5 +90,6 @@ elif "After" in file_name:
 		f.write(diff)
 		f.close
 		print("Open " + ip + "-changes.html to see difference")
+#If there was something other than before.txt or after.txt
 else:
 	print('Before or After not detected')
