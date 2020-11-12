@@ -44,10 +44,6 @@ username = input("Username: ")
 password = getpass()
 #This is required for our Diff Loop, pre-tvt store in Before, Post in After
 file_name_input = input("For Pre-TVT type Before.txt - For Post-TVT type After.txt : ")
-#Clearing all the old info out of the results.csv file
-#to_doc_w(file_name, "")
-#Commands To Use
-
 
 #For each IP in our IPs.txt file, we will look for that IP.txt for the individual commands for the host
 for ip in ips:
