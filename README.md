@@ -18,10 +18,13 @@ pip install difflib
 pip install re
 ```
 
-## Usage
+## Usages
 
 ```python
 USER CONFIGURATIONS:
+
+You can delete the contents of the output folder before beginning, but you must keep the folder itself.
+
 Under folder input:
 Edit the IPs.txt file to have a host on each line with just their IP
 Create a commands for each host, it must be in the format of the ipaddress.txt.
