@@ -1,7 +1,6 @@
 # Py-tvt
 Python Config Command Sender with unique commands for each host.
 
-
 ## Installation
 
 Requires the following libraries
