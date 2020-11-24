@@ -70,4 +70,24 @@ for ip in ips:
 	except:
 		print( ip + " Failed to connect")
 
-print('Completed')
+#Loop to determine actions for Pre-TVT or Post-TVT
+#Before Just prints complete
+if "Before" in file_name:
+	print('Completed')
+#After will run the diff comparing before and after
+elif "After" in file_name:
+	for ip in ips:
+		file_name_before = ("output/" + ip, "-" + "Before.txt" )
+		file_name_after = ("output/" + ip, "-" + "After.txt" )
+		fromfile = ''.join(file_name_before)
+		tofile = ''.join(file_name_after)
+		fromlines = open(fromfile, 'U').readlines()
+		tolines = open(tofile, 'U').readlines()
+		diff = difflib.HtmlDiff().make_file(fromlines,tolines,fromfile,tofile)
+		f = open("output/" + ip + "-changes.html", "w")
+		f.write(diff)
+		f.close
+		print("Open output/" + ip + "-changes.html to see difference")
+#If there was something other than before.txt or after.txt
+else:
+	print('Before or After not detected')

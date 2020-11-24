@@ -1,6 +1,8 @@
 # Py-tvt
 Python Config Command Sender with unique commands for each host.
 
+The default version TVT.py, will not attempt to automatically do a diff after the After.txt input is used.
+
 ## Installation
 
 Requires the following libraries
@@ -52,9 +54,12 @@ The script will run through the host and its commands.
 If there is an error connecting to an individual host, it will print and error and continue on.
 
 Under Folder output:
-Upon completion of the Before script option, it will write Completed.
+Upon completion of the Before script option, export a IPADDRESS-Before.txt to the output folder.
 
-Upon completion of the After script option, it will run a diff and generate you a HTML file to compare the Before & After of each host
+Upon completion of the After script option, export a IPADDRESS-After.txt to the output folder.
+
+
+If you use the Diff-TVT, it will run a diff and generate you a HTML file to compare the Before & After of each host, called IPADDRESS-Changes.html.  If you are using a slow host adn extensible amount of output, I do not suggest using this.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
