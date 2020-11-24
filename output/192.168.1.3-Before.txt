@@ -1,4 +1,0 @@
-hostname Doz
-
-07:50:04.310 Brisbane Fri Nov 13 2020
-

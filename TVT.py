@@ -63,7 +63,7 @@ for ip in ips:
 		print("Completing " + ip )
 		#Run all our commands and append to our file_name
 		for commands in commands_list:
-			output = net_connect.send_command_expect(commands)
+			output = net_connect.send_command_timing(commands)
 			results = output + '\n'
         	#Next we will append the output to the individual results file
 			to_doc_a(file_name, results)
