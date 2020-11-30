@@ -58,16 +58,34 @@ for ip in ips:
 			commands_list.append(line)
 
 	try:
-
 		net_connect = make_connection(ip , username, password)
 		print("Completing " + ip )
 		#Run all our commands and append to our file_name
 		for commands in commands_list:
-			output = net_connect.send_command_timing(commands)
-			results = output + '\n'
-        	#Next we will append the output to the individual results file
-			to_doc_a(file_name, results)
+			if "traceroute" in commands:
+				print("Sending " + commands)
+				pattern = re.escape('*')
+				output = net_connect.send_command(commands, strip_command=False, strip_prompt=False, expect_string=pattern )
+				net_connect.write_channel('\x1e')
+				results = output + '\n'
+				#Next we will append the output to the individual results file
+				to_doc_a(file_name, results)
+				continue
+			elif "ping" in commands:
+				print("Sending " + commands)
+				output = net_connect.send_command_timing(commands, strip_command=False )
+				results = output + '\n'
+        		#Next we will append the output to the individual results file
+				to_doc_a(file_name, results)
+				continue
+			else:
+				print("Sending " + commands)
+				output = net_connect.send_command(commands, strip_command=False, strip_prompt=False )
+				results = output + '\n'
+        		#Next we will append the output to the individual results file
+				to_doc_a(file_name, results)
+				continue
 	except:
 		print( ip + " Failed to connect")
 
-print('Completed')
+print('All hosts Completed')

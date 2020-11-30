@@ -1,7 +1,5 @@
 show run | inc hostname
 show clock
 sh run
-!test
-!ping
 traceroute nab.com.au
 ping 8.8.8.8
